@@ -1,0 +1,55 @@
+version: '3'
+
+services:
+
+  postgres:
+    image: postgres:latest
+    volumes:
+      - "/docker/ficelle/postgres:/var/lib/postgresql/data"
+    environment:
+      - POSTGRES_PASSWORD=ficelle
+      - POSTGRES_USER=ficelle
+
+  redis:
+    image: redis:latest
+    volumes:
+      - "/docker/ficelle/redis:/data"
+
+  migrate:
+    image: blusky/ficelle:latest
+    command: python manage.py migrate
+    depends_on:
+      - postgres
+      - redis
+
+  web:
+    image: blusky/ficelle:latest
+    command: gunicorn ficelle.wsgi --bind 0.0.0.0:8000 --preload --log-file -
+    ports:
+      - "8000:8000"
+    environment:
+      - VIRTUAL_HOST
+      - LETSENCRYPT_HOST
+      - LETSENCRYPT_EMAIL
+    depends_on:
+      - postgres
+      - redis
+      - migrate
+
+#  celery_beat:
+#    image: blusky/ficelle:latest
+#    command: python celery_wrapper.py ...
+#    networks:
+#      - ficelle-network
+#    depends_on:
+#      - postgres
+#      - redis
+#
+#  celery_worker:
+#    image: blusky/ficelle:latest
+#    command: python celery_wrapper.py ...
+#    networks:
+#      - ficelle-network
+#    depends_on:
+#      - postgres
+#      - redis
