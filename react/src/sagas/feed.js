@@ -29,17 +29,49 @@ function* create(action) {
   }
 }
 
-function* remove(action) {
+function* retrieve(action) {
   try {
-    const status =  yield call(api.feeds.remove, action.data.title);
+    const status =  yield call(api.feeds.retrieve, action.data.feed_id);
     if(status) {
-      yield put({type: "FEED_REMOVE_SUCCEEDED", user: {}});
+      yield put({type: "FEEDEDIT_LOAD_SUCCEEDED", feed: status.data});
     }
     else {
-      yield put({type: "FEED_REMOVE_FAILED", message: {}});
+      yield put({type: "FEEDEDIT_LOAD_FAILED", message: {}});
     }
   } catch (e) {
-    yield put({type: "FEED_REMOVE_FAILED", message: {}});
+    yield put({type: "FEEDEDIT_LOAD_FAILED", message: {}});
+  }
+}
+
+
+function* remove(action) {
+  try {
+    const status =  yield call(api.feeds.remove, action.data.feed_id);
+    if(status) {
+      yield put({type: "FEEDEDIT_DELETE_SUCCEEDED"});
+      yield put({type: "FEED_LIST_REQUESTED"});
+    }
+    else {
+      yield put({type: "FEEDEDIT_DELETE_FAILED", message: {}});
+    }
+  } catch (e) {
+    yield put({type: "FEEDEDIT_DELETE_FAILED", message: {}});
+  }
+}
+
+
+function* update(action) {
+  try {
+    const status =  yield call(api.feeds.patch, action.data.feed_id, action.data.feed_data);
+    if(status) {
+      yield put({type: "FEEDEDIT_UPDATE_SUCCEEDED"});
+      yield put({type: "FEED_LIST_REQUESTED"});
+    }
+    else {
+      yield put({type: "FEEDEDIT_UPDATE_FAILED", message: {}});
+    }
+  } catch (e) {
+    yield put({type: "FEEDEDIT_UPDATE_FAILED", message: {}});
   }
 }
 
@@ -48,6 +80,8 @@ export default function* () {
   yield [
     takeEvery("FEED_LIST_REQUESTED", list),
     takeEvery("FEED_CREATE_REQUESTED", create),
-    takeEvery("FEED_REMOVE_REQUESTED", remove)
+    takeEvery("FEEDEDIT_LOAD_REQUEST", retrieve),
+    takeEvery("FEEDEDIT_DELETE_REQUESTS", remove),
+    takeEvery("FEEDEDIT_UPDATE_REQUESTS", update)
   ]
 }

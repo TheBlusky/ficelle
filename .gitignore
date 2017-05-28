@@ -1,8 +1,10 @@
 .idea
+autoUpdate.sh
 react/build
 react/node_modules
 django/static
 django/db.sqlite3
+django/celerybeat-schedule
 react/coverage
 react/.DS_Store
 react/.env

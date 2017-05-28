@@ -5,10 +5,13 @@ const list = async () => {
   return response
 };
 
-const create = async (title, type, feed, state_json, settings_json, frequency) => {
-  const state = JSON.stringify(state_json);
-  const settings = JSON.stringify(settings_json);
-  const response = await axiosApi.post('/hooks/', {title, type, feed, state, settings, frequency});
+const create = async (title, type, feed, settings, frequency) => {
+  const response = await axiosApi.post('/hooks/', {title, type, feed, settings, frequency});
+  return response
+};
+
+const retrieve = async (id) => {
+  const response = await axiosApi.get(`/hooks/${id}/`);
   return response
 };
 
@@ -17,9 +20,14 @@ const remove = async (id) => {
   return response
 };
 
+const patch = async (id, data) => {
+  const response = await axiosApi.patch(`/hooks/${id}/`, data);
+  return response
+};
+
 const getAvailableHooks = async (id) => {
   const response = await axiosApi.get(`/hooks/get_available_hooks/`);
   return response
 };
 
-export default { list, create, remove, getAvailableHooks }
+export default { list, create, retrieve, remove, patch, getAvailableHooks }

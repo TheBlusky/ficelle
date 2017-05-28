@@ -37,7 +37,7 @@ class UserViewSet(ViewSet):
         login(request, django_user)
         return Response({'status': 'ok'})
 
-    @list_route(methods=['post'])
+    @list_route(methods=['get'])
     def logout(self, request):
         logout(request)
         return Response({})

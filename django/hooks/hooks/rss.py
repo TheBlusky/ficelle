@@ -31,7 +31,7 @@ def update_web(request, create_item, state, settings):
     return state, settings
 
 
-def init(state, settings, frequency):
+def init(settings, frequency):
     state = {"lastUpdate": 0}
     settings = {"url": settings['url']}
     frequency = frequency
@@ -39,5 +39,5 @@ def init(state, settings, frequency):
 
 
 def get_default():
-    return {}, {"url": "##ACCOUNT##"}, Hook.FREQUENCY_HALFHOUR
+    return {"url": "##ACCOUNT##"}, Hook.FREQUENCY_HALFHOUR
 

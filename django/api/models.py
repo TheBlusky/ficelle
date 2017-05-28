@@ -55,6 +55,7 @@ class Hook(models.Model):
     frequency = models.CharField(max_length=4, choices=FREQUENCY)
     settings = models.CharField(max_length=1024)
     state = models.CharField(max_length=1024)
+    enabled = models.BooleanField(default=True)
 
     def create_item_generator(self):
         def create_item(data):
@@ -91,9 +92,9 @@ def hook_create_cron(sender, instance, created, *args, **kwargs):
         )
         PeriodicTask.objects.create(
             interval = schedule,
-            name='ficelle-hook-{}'.format(instance.id),
+            name='ficelle-hook-{}'.format(str(instance.id)),
             task='ficelle.tasks.update_hook',
-            args=json.dumps([instance.id])
+            args=json.dumps([str(instance.id)])
         )
 
 

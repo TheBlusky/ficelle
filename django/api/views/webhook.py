@@ -10,7 +10,7 @@ from hooks import get_hook_handler
 @csrf_exempt
 @api_view(['GET', 'POST'])
 def webhook_view(request, hook_id):
-    hook = get_object_or_404(Hook, id=hook_id)
+    hook = get_object_or_404(Hook, id=hook_id, enabled=True)
     update_web = get_hook_handler(hook.type, "update_web")
     n_state, n_settings = update_web(
         request, hook.create_item_generator(),

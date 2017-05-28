@@ -16,7 +16,9 @@ def update_cron(create_item, state, settings):
 def update_web(request, create_item, state, settings):
     serialized = RequestSerializer(data=request.data)
     serialized.is_valid(raise_exception=True)
-    if serialized.validated_data['api_key'] != settings['api_key']:
+    if 'api_key' in settings and serialized.validated_data['api_key'] != settings['api_key']:
+        raise PermissionDenied(detail="Wrong API Key")
+    if 'api_key' not in settings and 'api_key' in state and serialized.validated_data['api_key'] != state['api_key']:
         raise PermissionDenied(detail="Wrong API Key")
     data = {
         "title": serialized.validated_data['title'],
@@ -27,15 +29,14 @@ def update_web(request, create_item, state, settings):
     return state, settings
 
 
-def init(state, settings, frequency):
-    state = {}
-    settings = {"api_key": str(uuid.uuid4())}
+def init(settings, frequency):
+    state = {"api_key": str(uuid.uuid4())}
     frequency = Hook.FREQUENCY_NEVER
-    return state, settings, frequency
+    return state, frequency
 
 
 def get_default():
-    return {}, {}, Hook.FREQUENCY_NEVER
+    return {}, Hook.FREQUENCY_NEVER
 
 """
 Boilerplate validation class

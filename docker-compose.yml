@@ -36,20 +36,21 @@ services:
       - redis
       - migrate
 
-#  celery_beat:
-#    image: blusky/ficelle:latest
-#    command: python celery_wrapper.py ...
-#    networks:
-#      - ficelle-network
-#    depends_on:
-#      - postgres
-#      - redis
-#
-#  celery_worker:
-#    image: blusky/ficelle:latest
-#    command: python celery_wrapper.py ...
-#    networks:
-#      - ficelle-network
-#    depends_on:
-#      - postgres
-#      - redis
+  celery_beat:
+    image: blusky/ficelle:latest
+    command: python celery_beat.py
+    networks:
+      - ficelle-network
+    depends_on:
+      - postgres
+      - redis
+
+  celery_worker:
+    image: blusky/ficelle:latest
+    command: python celery_worker
+    networks:
+      - ficelle-network
+    depends_on:
+      - celery_beat
+      - postgres
+      - redis

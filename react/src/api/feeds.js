@@ -10,9 +10,19 @@ const create = async (title) => {
   return response
 };
 
+const retrieve = async (id) => {
+  const response = await axiosApi.get(`/feeds/${id}/`);
+  return response
+};
+
 const remove = async (id) => {
   const response = await axiosApi.delete(`/feeds/${id}/`);
   return response
 };
 
-export default { list, create, remove }
+const patch = async (id, data) => {
+  const response = await axiosApi.patch(`/feeds/${id}/`, data);
+  return response
+};
+
+export default { list, create, retrieve, remove, patch }

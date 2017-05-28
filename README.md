@@ -25,18 +25,18 @@ There are two kinds of `hooks` :
 ### Features (roadmap)
 
  -  [x] Users self registering / login
- -  [ ] Feed management
+ -  [x] Feed management
    -  [x] Feed creation
-   -  [ ] Feed editing (front)
-   -  [ ] Feed removal (front)
- -  [ ] Hook management
+   -  [x] Feed editing (front)
+   -  [x] Feed removal (front)
+ -  [x] Hook management
    -  [x] Hook creation (only webhook)
-   -  [ ] Displaying all kind of hook (front)
-   -  [ ] Displaying hooks config template (front)
-   -  [ ] Hook editing (front)
-   -  [ ] Hook removal (front)
- -  [ ] User logout
- -  [ ] Implementing some CronHook
+   -  [x] Displaying all kind of hook (front)
+   -  [x] Displaying hooks config template (front)
+   -  [x] Hook editing (front)
+   -  [x] Hook removal (front)
+ -  [x] User logout
+ -  [x] Implementing some CronHook
 
 ### Hooks
 

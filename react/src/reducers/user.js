@@ -14,6 +14,8 @@ const user = (state = { logged: false, registered: false, loading: false }, acti
     case "USER_LOGIN_REQUESTED":
     case "USER_REGISTER_REQUESTED":
       return { logged: false, registered: false, loading: true };
+    case "USER_LOGOUT_SUCCEEDED":
+      return { logged: false, registered: false, loading: false };
     default:
       return state;
   }

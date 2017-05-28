@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {Card, CardText, CardTitle, CircularProgress, FlatButton} from "material-ui";
 import {connect} from "react-redux";
 
@@ -10,9 +11,20 @@ class UserMenu extends Component {
     }
   }
 
+  getHookCount(feeds) {
+    let result = 0;
+    feeds.map(feed => (result+=feed.hook_set.length));
+    return result;
+  }
+
   render() {
     if(!('user' in this.props.user)) {
-      return <CircularProgress size={80} thickness={5} />
+      return (
+        <Card>
+        <CardText>
+          <CircularProgress size={80} thickness={5} />
+        </CardText>
+      </Card>)
     }
     return (
       <Card>
@@ -21,12 +33,12 @@ class UserMenu extends Component {
           subtitle={`
             ${this.props.feeds.length} feed${this.props.feeds.length>0?"s":""}
             -
-            ${this.props.hooks.length} hook${this.props.hooks.length>0?"s":""}
+            ${this.getHookCount(this.props.feeds)} hook${this.getHookCount(this.props.feeds)>0?"s":""}
           `}
           actAsExpander={true}
           showExpandableButton={true} />
         <CardText expandable={true}>
-          <FlatButton label="Disconnect" /><br />
+          <FlatButton label="Disconnect" onTouchTap={this.props.api_logout} /><br />
           <FlatButton label="Settings" />
         </CardText>
       </Card>
@@ -37,16 +49,15 @@ class UserMenu extends Component {
 
 
 UserMenu.propTypes = {
-  hooks: PropTypes.array.isRequired,
   feeds: PropTypes.array.isRequired,
   user: PropTypes.object.isRequired,
-  api_me: PropTypes.func.isRequired
+  api_me: PropTypes.func.isRequired,
+  api_logout: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state, ownProps) => {
   return {
     feeds: state.ficelle.feeds,
-    hooks: state.ficelle.hooks,
     user: state.ficelle.user,
   }
 };
@@ -55,6 +66,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     api_me: () => {
       dispatch({type: "USER_ME_REQUESTED"})
+    },
+    api_logout: () => {
+      dispatch({type: "USER_LOGOUT_REQUESTED"})
     }
   }
 };

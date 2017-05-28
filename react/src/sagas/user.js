@@ -43,9 +43,25 @@ function* me(action) {
   }
 }
 
+
+function* logout(action) {
+  try {
+    const status =  yield call(api.users.logout);
+    if(status) {
+      yield put({type: "USER_LOGOUT_SUCCEEDED"});
+    }
+    else {
+      yield put({type: "USER_LOGOUT_FAILED", message: {}});
+    }
+  } catch (e) {
+    yield put({type: "USER_LOGOUT_FAILED", message: {}});
+  }
+}
+
 export default function* () {
   yield [
     takeEvery("USER_LOGIN_REQUESTED", login),
+    takeEvery("USER_LOGOUT_REQUESTED", logout),
     takeEvery("USER_REGISTER_REQUESTED", register),
     takeEvery("USER_ME_REQUESTED", me),
   ]

@@ -6,6 +6,8 @@ const feedCreation = (state = {loading: false, success: false}, action) => {
       return {loading: false, success: true};
     case "FEED_CREATE_FAILED":
       return {loading: false, success: false};
+    case "USER_LOGOUT_SUCCEEDED":
+      return {loading: false, success: false}
     default:
       return state;
   }
