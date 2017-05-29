@@ -16,11 +16,11 @@ class AddFloatingActionButton extends Component {
       <div style={{position: 'absolute', 'bottom':10, 'right': 10}}>
         <SpeedDial fabContentOpen={<ContentAdd />} fabContentClose={<NavigationClose />}>
           <SpeedDialItem
-            label="New Hook"
+            label={<div style={{backgroundColor: "#FFFFFF"}}>New Hook</div>}
             fabContent={"@"}
             onTouchTap={() => {this.setState({hook_add_open: this.state.hook_add_open + 1})}} />
           <SpeedDialItem
-            label="New Fdeed"
+            label={<div style={{backgroundColor: "#FFFFFF"}}>New Feed</div>}
             fabContent="#"
             onTouchTap={() => {this.setState({feed_add_open: this.state.feed_add_open + 1})}} />
         </SpeedDial>

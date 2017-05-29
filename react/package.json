@@ -18,6 +18,7 @@
     "react-sortable-tree": "^0.1.17",
     "react-tap-event-plugin": "^2.0.1",
     "react-web-notification": "^0.2.4",
+    "react-websocket": "^1.1.7",
     "redux": "^3.6.0",
     "redux-saga": "^0.14.7"
   },

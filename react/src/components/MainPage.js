@@ -6,6 +6,7 @@ import {Route} from "react-router-dom";
 import HookEdit from "./HookEdit";
 import { connect } from 'react-redux'
 import FeedEdit from "./FeedEdit";
+import FicelleWebSocket from "./FicelleWebSocket";
 
 const tdb = () => <div>ToBeDefined</div>;
 
@@ -25,8 +26,10 @@ class MainPage extends Component {
         </Col>
         <Col lg={10} md={9} sm={7} xs={12}>
             <div>
+
               <HookEdit />
               <FeedEdit />
+              <FicelleWebSocket />
               <Route exact path="/home" component={DirectFeed} />
               <Route path="/home/feeds" component={tdb} />
               <Route path="/home/hooks" component={tdb} />

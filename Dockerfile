@@ -9,4 +9,4 @@ WORKDIR /ficelle/django
 RUN pip install -r requirements.txt
 RUN python manage.py collectstatic
 EXPOSE 8000
-CMD gunicorn ficelle.wsgi --bind 0.0.0.0:8000 --preload --log-file -
+CMD EXIT

@@ -22,5 +22,5 @@ class ItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Item
-        fields = ('id', 'created', 'feed', 'owner', 'hook', 'data')
-        read_only_fields = ('id', 'created', 'feed', 'owner', 'hook', 'data')
+        fields = ('id', 'created', 'feed', 'hook', 'data')
+        read_only_fields = ('id', 'created', 'feed', 'hook', 'data')

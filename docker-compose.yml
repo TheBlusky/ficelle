@@ -24,7 +24,7 @@ services:
 
   web:
     image: blusky/ficelle:latest
-    command: gunicorn ficelle.wsgi --bind 0.0.0.0:8000 --preload --log-file -
+    command: daphne -b 0.0.0.0 ficelle.asgi:channel_layer
     ports:
       - "8000:8000"
     environment:
@@ -37,6 +37,14 @@ services:
       - migrate
       - celery_beat
       - celery_worker
+      - web_worker
+
+  web_worker:
+    image: blusky/ficelle:latest
+    command: python manage.py runworker
+    depends_on:
+      - postgres
+      - redis
 
   celery_beat:
     image: blusky/ficelle:latest
@@ -47,7 +55,7 @@ services:
 
   celery_worker:
     image: blusky/ficelle:latest
-    command: python celery_worker
+    command: python celery_worker.py
     depends_on:
       - celery_beat
       - postgres

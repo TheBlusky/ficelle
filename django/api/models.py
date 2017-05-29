@@ -1,5 +1,5 @@
 import json
-
+from channels import Group
 import demjson
 from django.db import models
 from django.dispatch import receiver
@@ -7,6 +7,7 @@ from django.contrib.auth.models import User as DjangoUser
 import uuid
 
 from django_celery_beat.models import IntervalSchedule, PeriodicTask
+from rest_framework.renderers import JSONRenderer
 
 
 class User(models.Model):
@@ -65,6 +66,11 @@ class Hook(models.Model):
             item.feed = self.feed
             item.data = demjson.encode(data)
             item.save()
+            from api.serializers import ItemSerializer
+            data = demjson.encode(ItemSerializer(item).data)
+            Group("notif-{}".format(str(self.owner.id))).send({
+                "text": data,
+            })
             return item
         return create_item
 
