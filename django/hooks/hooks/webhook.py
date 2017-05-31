@@ -36,7 +36,7 @@ def init(settings, frequency):
 
 
 def get_default():
-    return {}, Hook.FREQUENCY_NEVER
+    return {"type": "object","properties": {}}, Hook.FREQUENCY_NEVER
 
 """
 Boilerplate validation class

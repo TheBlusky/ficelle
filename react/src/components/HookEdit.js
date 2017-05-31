@@ -80,19 +80,26 @@ class HookEditDialog extends React.Component {
             </Row>
 
             <Row style={{"margin": "10px"}}>
-              <Col lg={6} md={6} sm={6} xs={6}>
+              <Col lg={3} md={3} sm={3} xs={3}>
                 <TextField
                   disabled={true}
                   floatingLabelText="Type"
                   fullWidth={true}
                   defaultValue={this.props.hookEdit.hook.type} />
               </Col>
-              <Col lg={6} md={6} sm={6} xs={6}>
+              <Col lg={3} md={3} sm={3} xs={3}>
                 <TextField
                   floatingLabelText="Frequency"
                   ref="hook_frequency"
                   fullWidth={true}
                   defaultValue={this.props.hookEdit.hook.frequency} />
+              </Col>
+              <Col lg={6} md={6} sm={6} xs={6}>
+                <TextField
+                  disabled={true}
+                  floatingLabelText="ID"
+                  fullWidth={true}
+                  defaultValue={this.props.hookEdit.hook.id} />
               </Col>
             </Row>
 

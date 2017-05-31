@@ -39,5 +39,14 @@ def init(settings, frequency):
 
 
 def get_default():
-    return {"url": "##ACCOUNT##"}, Hook.FREQUENCY_HALFHOUR
+    schema = {
+        "type": "object",
+        "properties": {
+            "url": {
+                "type": "string",
+                "title": "URL"
+            }
+        }
+    }
+    return schema, Hook.FREQUENCY_HALFHOUR
 

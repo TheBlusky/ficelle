@@ -30,4 +30,4 @@ def init(settings, frequency):
 
 
 def get_default():
-    return {}, Hook.FREQUENCY_MINUTE
+    return {"type": "object","properties": {}}, Hook.FREQUENCY_MINUTE

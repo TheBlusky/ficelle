@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { CircularProgress, Dialog, FlatButton, MenuItem, SelectField, TextField } from "material-ui";
 import {connect} from "react-redux";
+import Form from "react-jsonschema-form";
 import {Col, Row} from "react-flexbox-grid";
 
 class AddHookDialog extends Component {
   state = {
+    hook_schema: {},
     hook_add_open: false,
     hook_selected_feed: undefined,
     hook_selected_type: undefined,
@@ -14,7 +16,11 @@ class AddHookDialog extends Component {
   componentWillReceiveProps(newprops){
     // If hook_add_open is changed, popup
     if(this.props.hook_add_open < newprops.hook_add_open) {
-       this.setState({hook_add_open: true});
+       this.setState({
+         hook_add_open: true,
+         hook_selected_feed: undefined,
+         hook_selected_type: undefined,
+       });
        if(!this.props.hookTypes.loaded && !this.props.hookTypes.loading) {
          this.props.hook_api_listavailable()
        }
@@ -91,8 +97,10 @@ class AddHookDialog extends Component {
               onChange={(event, index, value) => {
                 this.refs.hook_frequency.getInputNode().value = value.template.frequency;
                 this.refs.hook_frequency.forceUpdate();
-                this.refs.hook_settings.getInputNode().value = value.template.settings;
-                this.setState({hook_selected_type: value})
+                this.setState({
+                  hook_selected_type: value,
+                  hook_schema: JSON.parse(value.template.settings),
+                })
               }}>
               {this.props.hookTypes.types.map((type) => (
                 <MenuItem value={type} key={type.type} primaryText={type.type}/>
@@ -106,7 +114,12 @@ class AddHookDialog extends Component {
               fullWidth={true} />
           </Col>
         </Row>
-
+        <h3>Settings</h3>
+         <Form
+           schema={this.state.hook_schema}
+            onChange={(a)=> {this.refs.hook_settings.getInputNode().value = JSON.stringify(a.formData)}}>
+           <div />
+         </Form>
         <TextField
           floatingLabelText="Settings"
           fullWidth={true}
