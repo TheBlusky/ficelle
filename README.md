@@ -101,4 +101,74 @@ Then, the application should be available in your browser at `http://localhost:3
 
 ## Create a new Hook
 
-Tbd.
+### 1. Create the hook
+
+Just create a python file under `django/hooks/hooks/`. Eg: `django/hooks/hooks/my_super_hook.py`
+
+### 2. Boilerplate
+
+```
+from api.models import Hook
+
+
+def get_default():
+    schema = {
+        "type": "object",
+        "properties": {
+            "url": {
+                "type": "string",
+                "title": "URL"
+            }
+        }
+    }
+    return schema, Hook.XXX
+
+
+def init(settings, frequency):
+    return state, frequency
+
+def update_cron(create_item, state, settings):
+    return state, settings
+
+
+def update_web(request, create_item, state, settings):
+    return state, settings
+```
+
+### 3. Implement it all !!!
+
+A `hook` used the following three concepts:
+
+ - `settings` is a dictionary settable by the user, containing information required by the hook to works (api key, credentials, urls, ...)
+ - `state` is a dictionary settable by the `hook` instance, but readable by the user, containing information needed for further execution of the hook (such as savec data)
+ - `frequency` is the frequency of the hook, the following value are possible :
+ 
+ 
+
+|  Name                   | Values           |
+|-------------------------|------------------|
+| `FREQUENCY_NEVER` | The hook is not launched periodicly (`webhook`) |
+| `FREQUENCY_MINUTE`    | Each minute |
+| `FREQUENCY_HALFHOUR`  | Each half hour |
+| `FREQUENCY_HOUR`  | Each hour |
+| `FREQUENCY_DAY`   | Each day |
+| `FREQUENCY_WEEK`  | Each week |
+
+Implementation of the `hook` requires 3 steps:
+
+ - `get_default()` that return settings schema and frequency for the hook
+ - `init()` that is executed when a hook is created
+ - `update_cron()` / `update_web()` that is the main process of a `hook`
+ 
+ 
+#### a. `get_default()` 
+
+tbd
+
+#### b. `init()`
+
+tbd
+
+#### c. `update_cron()` / `update_web()`
+
+tbd
