@@ -22,21 +22,15 @@ There are two kinds of `hooks` :
 
 ## Features
 
-### Features (roadmap)
+### To-do
 
- -  [x] Users self registering / login
- -  [x] Feed management
-   -  [x] Feed creation
-   -  [x] Feed editing (front)
-   -  [x] Feed removal (front)
- -  [x] Hook management
-   -  [x] Hook creation (only webhook)
-   -  [x] Displaying all kind of hook (front)
-   -  [x] Displaying hooks config template (front)
-   -  [x] Hook editing (front)
-   -  [x] Hook removal (front)
- -  [x] User logout
- -  [x] Implementing some CronHook
+ - Front
+  - [ ] JSON Schema for Hook editing
+  - [ ] Filtering on Hook / Feed
+ - Server
+  - [ ] Implement more services
+  - [ ] Ficelle event within ficelle event
+  - [ ] More testing
 
 ### Hooks
 
@@ -44,7 +38,9 @@ There are two kinds of `hooks` :
    - [x] API
    - [ ] Slack (?)
  - [ ] Cronhook
+   - [X] Dummy Hook that gives time
    - [X] RSS
+   - [X] Torrent API
    - [ ] Email (?)
    - [ ] Reddit
    - [ ] Twitter
@@ -57,7 +53,7 @@ There are two kinds of `hooks` :
 ### Build the image
 
 ```
-git clone http://.../ficelle.git/
+git clone https://github.com/TheBlusky/ficelle.sh
 cd ficelle/
 sh build.sh
 ```
@@ -77,14 +73,32 @@ The following environment variables can be set to change `ficelle` settings:
 | `FICELLE_DEBUG`         | `True` / `False` | `False` | Enable the debug mode of `django` backend
 | `FICELLE_ALLOW_REGISTER`| `True` / `False` | `True`  | Allow users to self register
 
+## Under the hood
+
+![process schema](process.schema.png)
+
 ## Run in a development environement
 
+If you want to contribute to `ficelle`, the following layers must be deployed (for en dev. environement)
 ```bash
-git clone http://.../ficelle.git/
+git clone https://github.com/TheBlusky/ficelle.sh
 cd ficelle/
-cd django &&
-  python manage.py runserver &
-cd ../react/ &&
-  npm run start
+cd django/
+
+# Run django webserver (including Runner and Worker)
+python manage.py runserver
+
+# Run celery beat and worker (only for cronhooks, but require a Redis instance)
+python celery_beat.py
+python celery_worker.py
+
+cd ../react/
+# Run npm for having an instance of the front
+npm run start
 ```
 
+Then, the application should be available in your browser at `http://localhost:3000`.
+
+## Create a new Hook
+
+Tbd.
