@@ -96,6 +96,7 @@ class AddHookDialog extends Component {
               value={this.state.hook_selected_type}
               onChange={(event, index, value) => {
                 this.refs.hook_frequency.getInputNode().value = value.template.frequency;
+                this.refs.hook_settings.getInputNode().value = "{}";
                 this.refs.hook_frequency.forceUpdate();
                 this.setState({
                   hook_selected_type: value,
