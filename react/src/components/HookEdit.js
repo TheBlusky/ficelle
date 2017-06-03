@@ -39,7 +39,7 @@ class HookEditDialog extends React.Component {
         onTouchTap={() => this.props.hook_edit_update(this.props.hookEdit.hook.id,{
           title:this.refs.hook_title.getValue(),
           feed:this.state.hook_selected_feed,
-          enable:this.state.hook_enabled,
+          enabled:this.state.hook_enabled,
           frequency:this.refs.hook_frequency.getValue(),
           settings:this.refs.hook_settings.getValue()
         })}

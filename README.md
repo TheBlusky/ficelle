@@ -163,11 +163,24 @@ Implementation of the `hook` requires 3 steps:
  
 #### a. `get_default()` 
 
-tbd
+The `get_default()` function is called when the user lists available hooks. The function returns a t-uple, containing:
+
+- A [JSON Schema](http://json-schema.org/) that will be used by the front-end to generate settings form. You can play
+with [JSON Schema](http://json-schema.org/) using the
+[react-jsonschema-form](https://mozilla-services.github.io/react-jsonschema-form/) react library.
+- A default frequency
 
 #### b. `init()`
 
-tbd
+The `init()` function is called when the `hook` is created. The function is called with the following parameters:
+
+- `settings`, which is a dictionary, sent by the user, witht he `hook` settings.
+- `frequency`, which is the frequency desired by the user.
+
+The function shall return a t-uple containing :
+
+- `state`, in order to initialize the state of the hook instance
+- `frequency`, if you need to overide given value (Eg: `FREQUENCY_NEVER` for a `WebHook`)
 
 #### c. `update_cron()` / `update_web()`
 

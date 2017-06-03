@@ -30,7 +30,7 @@ def perform_search(settings, retry=3):
         ]
     else:
         time.sleep(3)
-        perform_search(settings, retry-1)
+        return perform_search(settings, retry-1)
 
 
 def update_cron(create_item, state, settings):
