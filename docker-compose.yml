@@ -1,9 +1,11 @@
 version: '3'
 
+
 services:
 
   postgres:
     image: postgres:latest
+    network_mode: "bridge"
     volumes:
       - "/docker/ficelle/postgres:/var/lib/postgresql/data"
     environment:
@@ -12,11 +14,13 @@ services:
 
   redis:
     image: redis:latest
+    network_mode: "bridge"
     volumes:
       - "/docker/ficelle/redis:/data"
 
   migrate:
     image: blusky/ficelle:latest
+    network_mode: "bridge"
     command: python manage.py migrate
     depends_on:
       - postgres
@@ -24,7 +28,11 @@ services:
 
   web:
     image: blusky/ficelle:latest
+    network_mode: "bridge"
     command: daphne -b 0.0.0.0 ficelle.asgi:channel_layer
+    links:
+      - postgres
+      - redis
     ports:
       - "8000:8000"
     environment:
@@ -41,6 +49,10 @@ services:
 
   web_worker:
     image: blusky/ficelle:latest
+    network_mode: "bridge"
+    links:
+      - postgres
+      - redis
     command: python manage.py runworker
     depends_on:
       - postgres
@@ -48,6 +60,10 @@ services:
 
   celery_beat:
     image: blusky/ficelle:latest
+    network_mode: "bridge"
+    links:
+      - postgres
+      - redis
     command: python celery_beat.py
     depends_on:
       - postgres
@@ -55,6 +71,10 @@ services:
 
   celery_worker:
     image: blusky/ficelle:latest
+    network_mode: "bridge"
+    links:
+      - postgres
+      - redis
     command: python celery_worker.py
     depends_on:
       - celery_beat

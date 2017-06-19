@@ -28,6 +28,6 @@ def random_phrase():
     choices = [random.choice(words) for _ in range(random.randint(3,8))]
     return ' '.join(choices)
 
-client = FicelleClient("http://localhost:8000","ebfb8908-c3b0-49b4-9ca5-c158a014b361","66cc587a-dbf1-42df-921b-9df27fc3de73")
+client = FicelleClient("http://localhost:8000","cd30c248-fc05-4182-ba78-886df35ffc51","99f2080d-4274-4461-bfa2-627eb14c0eee")
 
 client.push(random_phrase(), random_phrase())
