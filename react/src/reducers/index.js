@@ -10,6 +10,7 @@ import hooksAvailable from "./hooksAvailable";
 import hookEdit from "./hookEdit";
 import feedEdit from "./feedEdit";
 import hookTypes from "./hookTypes";
+import filters from "./filters";
 
 const reducer = combineReducers({
   user,
@@ -22,7 +23,8 @@ const reducer = combineReducers({
   hookTypes,
   hookCreation,
   hooksAvailable,
-  items
+  items,
+  filters
 });
 
 export default reducer

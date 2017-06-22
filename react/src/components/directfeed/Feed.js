@@ -13,9 +13,17 @@ class Feed extends Component {
   render() {
     return (
       <div>
-        {this.props.items.items.map(item => (
-          <Item key={item.id} item={item} />
-        ))}
+        {
+          this.props.items.items
+            .filter(item => (
+              (this.props.filters.id === undefined) ||
+              (this.props.filters.id === item.hook.id) ||
+              (this.props.filters.id === item.feed.id)
+            ))
+            .map(item => (
+              <Item key={item.id} item={item} />
+            ))
+        }
       </div>
     )
   }
@@ -29,6 +37,7 @@ Feed.propTypes = {
 const mapStateToProps = (state, ownProps) => {
   return {
     items: state.ficelle.items,
+    filters: state.ficelle.filters,
   }
 };
 
