@@ -31,7 +31,7 @@ class Item extends Component {
                 style={{marginRight: '1em'}}
                 backgroundColor={this.getLightColor(this.props.item.hook.id)}
                 onTouchTap={() => this.props.changeFilter(this.props.item.hook.id)}
-                onRequestDelete={this.props.filters.id == this.props.item.hook.id ? this.props.removeFilter : false}
+                onRequestDelete={this.props.filters.id === this.props.item.hook.id ? this.props.removeFilter : false}
               >
                 <Avatar size={16} backgroundColor={this.getDarkColor(this.props.item.hook.id)}>F</Avatar>
                 @{this.props.item.hook.title}
@@ -40,7 +40,7 @@ class Item extends Component {
                 style={{marginRight: '1em'}}
                 backgroundColor={this.getLightColor(this.props.item.feed.id)}
                 onTouchTap={() => this.props.changeFilter(this.props.item.feed.id)}
-                onRequestDelete={this.props.filters.id == this.props.item.feed.id ? this.props.removeFilter : false}
+                onRequestDelete={this.props.filters.id === this.props.item.feed.id ? this.props.removeFilter : false}
               >
                 <Avatar size={16} backgroundColor={this.getDarkColor(this.props.item.feed.id)}>H</Avatar>
                 #{this.props.item.feed.title}
