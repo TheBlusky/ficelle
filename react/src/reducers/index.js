@@ -11,6 +11,7 @@ import hookEdit from "./hookEdit";
 import feedEdit from "./feedEdit";
 import hookTypes from "./hookTypes";
 import filters from "./filters";
+import listLock from "./listLock";
 
 const reducer = combineReducers({
   user,
@@ -24,7 +25,8 @@ const reducer = combineReducers({
   hookCreation,
   hooksAvailable,
   items,
-  filters
+  filters,
+  listLock
 });
 
 export default reducer
