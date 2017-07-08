@@ -39,6 +39,8 @@ services:
       - VIRTUAL_HOST
       - LETSENCRYPT_HOST
       - LETSENCRYPT_EMAIL
+      - FICELLE_DEBUG=False
+      - FICELLE_ALLOW_REGISTER=False
     depends_on:
       - postgres
       - redis

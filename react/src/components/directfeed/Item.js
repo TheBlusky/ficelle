@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
+import Moment from 'react-moment';
 import {Avatar, Card, CardText, Chip} from "material-ui";
 import Color from 'color'
 import {connect} from "react-redux";
@@ -48,10 +48,8 @@ class Item extends Component {
             </div>
             <div>
               <i>
-                { moment(this.props.item.created).fromNow() }
-                {" "}
-                ({ moment(this.props.item.created).format('MMMM Do YYYY, h:mm:ss a') })
-                </i>
+                <Moment fromNow date={this.props.item.created} /> (<Moment date={this.props.item.created} />)
+              </i>
             </div>
             <div>
               {data.title} - {data.text}
