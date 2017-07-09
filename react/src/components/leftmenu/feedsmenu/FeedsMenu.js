@@ -6,6 +6,8 @@ import {connect} from "react-redux";
 import NodeRendererFicelle from "./node-renderer/node-renderer-ficelle"
 import AddFloatingActionButton from "./AddFloatingActionButton";
 import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
+import HookItem from "./HookItem";
+import FeedItem from "./FeedItem";
 
 class FeedsMenu extends Component {
   state = {
@@ -17,31 +19,13 @@ class FeedsMenu extends Component {
     this.setState({
       treeData: newprops.feeds.map(
         feed => ({
-          title:
-            <div>
-              #{feed.title}
-              <IconButton
-                iconStyle={{width: 16, height: 16}}
-                style={{width: 16, height: 16, padding: 0, paddingLeft: 10}}
-                onTouchTap={() => this.props.feed_edit_load(feed.id)}>
-                <ModeEdit />
-              </IconButton>
-            </div>,
+          title: <FeedItem feed={feed} />,
           cleanTitle: feed.title,
           id: feed.id,
           expanded: true,
           children: feed.hook_set.map(
             hook => ({
-              title:
-                <div>
-                  @{hook.title}
-                  <IconButton
-                    iconStyle={{width: 16, height: 16}}
-                    style={{width: 16, height: 16, padding: 0, paddingLeft: 10}}
-                    onTouchTap={() => this.props.hook_edit_load(hook.id)}>
-                    <ModeEdit />
-                  </IconButton>
-                </div>,
+              title: <HookItem hook={hook} />,
               id: hook.id,
               cleanTitle: hook.title
             })
